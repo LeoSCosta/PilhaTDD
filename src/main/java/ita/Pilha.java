@@ -2,30 +2,39 @@ package ita;
 
 public class Pilha {
 
-    private int tamanho;
-    private Object elemento;
+    private int tamanho = 0;
+    private final Object[] elemento;
 
+    public Pilha(int maximo) {
+        elemento= new Object[maximo];
+    }
 
     public int getTamanho() {
         return tamanho;
     }
 
-    public void setTamanho(int tamanho) {
-        this.tamanho = tamanho;
-    }
-
 
 
     public boolean estaVazia() {
-        return elemento==null;
+        return tamanho ==0;
     }
 
     public void empilha(Object elemento) {
-        this.elemento = elemento;
+        if (tamanho == this.elemento.length)
+            throw new PilhaCheiaException("A pilha está cheia");
+        this.elemento[tamanho] = elemento;
         tamanho++;
     }
 
-    public String topo() {
-        return (String) elemento;
+    public Object topo() {
+        return elemento[tamanho-1];
+    }
+
+    public Object desempilha() {
+        if (estaVazia())
+            throw new PilhaVaziaException("A pilha está vazia");
+        Object topo = topo();
+        tamanho--;
+        return topo;
     }
 }
